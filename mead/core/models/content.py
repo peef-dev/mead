@@ -23,7 +23,7 @@ class Page(db.Model):
 
 
 class Post(db.Model):
-    """The :class:`Page` object is a Page.
+    """The :class:`Post` object is a Post .
     """
     __tablename__ = 'posts'
 
@@ -34,7 +34,7 @@ class Post(db.Model):
     type = db.Column(db.Text)
 
     def __repr__(self):
-        return '<Page #%r>' % self.id
+        return '<Post #%r>' % self.id
 
 # meta class page
 # meta class post

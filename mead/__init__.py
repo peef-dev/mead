@@ -57,6 +57,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = app.config.get('DATABASE', None)
 if 'DATABASE' in app.config:
     del app.config['DATABASE']
 
+# =====
 # VIEWS
 # =====
 # I know these imports look unused, but apparently importing them makes the app

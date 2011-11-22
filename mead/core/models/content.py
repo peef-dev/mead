@@ -36,5 +36,6 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post #%r>' % self.id
 
+#db.create_all()
 # meta class page
 # meta class post

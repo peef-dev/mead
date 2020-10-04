@@ -1,0 +1,4 @@
+
+SECRET_KEY = "the-secret-key"
+
+DATABASE_URI = 'postgresql+psycopg2://user:password@ipaddress:port/dbname'

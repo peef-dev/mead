@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>New Project</title>
+{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="New project">
+{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	  {% for message in messages %}
+	    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  {% endfor %}
+	{% endif %}
+{% endwith %}
+
+<br>
+
+<main role="main" class="container">
+
+  <div class="starter-template">
+    <h1>Bootstrap starter template</h1>
+    <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+  </div>
+
+</main><!-- /.container -->
+
+
+{% endblock %}

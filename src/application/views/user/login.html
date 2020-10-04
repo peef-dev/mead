@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+      
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <h2 class="text-center">Login</h2>
+
+      <form method="post">
+        <div class="form-group">
+          <input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+          username: <input class="form-control" type="text" name="username" required=""><br>
+          password: <input class="form-control" type="password" name="password"><br>
+          <input type="submit" value="Login" class="btn btn-secondary">
+        </div>
+      </form>
+    </div>
+    
+    <div class="col-md-4"></div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,44 +1,9 @@
-Mead: Sweet Flask-based CMS for Content
-=======================================
+Mead: A collection of reusable Flask extensions for common web development projects
+===================================================================================
 
-* WordPress influenced
-* Authentication System
-    - Roles / Abilities
-* Custom Post Types (Posts/Pages Default)
-* Tags + Categories
-* RSS / Atom Feeds for Everything (Internal Plugin)
-* Comments (backtype? disqus?)
-* Plugin Structure
-    - Hooks System     
-    - support git backed posts
-    - support markups
-    - comment
-* Templates
-    - job_234.html
-    - post_342.html
-    - category_423.html
-* ReST API or XML-RPC (Internal Plugin)
- 
+!!! WORK IN PROGRESS !!!
+========================
 
-Modules / Libraries
-===================
-
-- SQLAlchemy
-- Nexus
-- Dulwich
-- Backtype
-- Disqus
-
-
-
-Frontend / Admin
-================
-
-ExtJS?
-MarkItUp
-
-
-
-Things to Consider
-==================
-Mobile.
+This will be a repository of Flask extensions that can be easily integrated into your Flask applications to add common functionalities.
+Each extension will be designed as API to be easy to use and can be configured using Flask's app configuration system.
+The extensions will be modular and will be used individually or combined as needed for your specific use case.

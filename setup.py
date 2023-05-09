@@ -19,8 +19,9 @@ required = []
 
 setup(
     name='mead',
-    version='0.0.0',
-    description='[Work In Progress] Flask-based CMS Influenced by WordPress',
+    version='0.0.1',
+    description='[Work In Progress] A collection of reusable Flask extensions '
+                'for common web development projects',
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
     author='Kenneth Reitz',

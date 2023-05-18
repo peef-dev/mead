@@ -2,7 +2,7 @@ import uuid
 
 from werkzeug.security import generate_password_hash
 
-from application.models import Role, User
+from flask_mead.models import Role, User
 
 
 class RoleService:

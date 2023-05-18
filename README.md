@@ -1,44 +1,23 @@
-# Mead
+# Flask-Mead
 
-# !!! WORK IN PROGRESS !!!
+## !!! WORK IN PROGRESS !!!
 
-Mead is a Flask boilerplate for common web development projects with:
+Flask-Mead is a Flask extension that let's you build custom components for your web application.
+It includes:
 
-- Simple and extensible structure
 - PostgreSQL support
-- Docker support
-- pre-commit support for code quality
 - Basic users authentication
 
-# How to run the application ?
-
-First of all, note that the variables **<APP_CONTAINER_NAME>** and **<DB_CONTAINER_NAME>** should be set in your **.env** file.
-An example is given in **dot.env.example** file.
-
-### To build the image
+## Example
 
 ```
-docker-compose up --build
+from flask import Flask
+from flask_mead import Mead
+
+app = Flask(__name__)
+
+mead_app = Mead()
+mead_app.init_app(app)
 ```
 
-### To run the image
-
-```
-docker-compose up
-```
-
-### To go inside the containers
-
-```
-docker exec -it <APP_CONTAINER_NAME> bash
-
-docker exec -it <DB_CONTAINER_NAME> psql -U admin
-```
-
-### To initialize or migrate database, go inside your <APP_CONTAINER_NAME> container and execute
-
-```
-./dev/db_init.sh
-
-./dev/db_migrate.sh
-```
+This extension is in active development and not ready yet, use it only for testing purposes.

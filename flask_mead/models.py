@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask_login import UserMixin
 
-from application.extensions import db
+from flask_mead.extensions import db
 
 
 class BaseModel:

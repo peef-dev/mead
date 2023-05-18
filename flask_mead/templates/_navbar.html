@@ -17,14 +17,14 @@
             <ul class="navbar-nav mb-2 mb-md-0">
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a>
+                    <a class="nav-link" href="{{url_for('mead.logout')}}">Logout</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>
+                    <a class="nav-link" href="{{url_for('mead.login')}}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('auth.register')}}">Register</a>
+                    <a class="nav-link" href="{{url_for('mead.register')}}">Register</a>
                 </li>
                 {% endif %}
             </ul>

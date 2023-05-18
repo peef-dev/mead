@@ -1,11 +1,7 @@
 flask==2.2.5
 flask-sqlalchemy==3.0.3
-flask-migrate==4.0.4
 psycopg2-binary==2.9.6
 flask-login== 0.6.2
 python-slugify==8.0.1
 flask-wtf==1.1.1
 email-validator==2.0.0
-
-# Dev
-debugpy==1.6.7

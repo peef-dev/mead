@@ -9,13 +9,13 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 
 
-login_manager.login_view = "auth.login"
+login_manager.login_view = "mead.login"
 login_manager.login_message = "Welcome! Please login to acces to app."
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    from application.services import UserService
+    from flask_mead.services import UserService
 
     user = UserService(db.session)
     return user.get_user_by_id(user_id)

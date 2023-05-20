@@ -6,7 +6,9 @@ from flask import Blueprint, g, render_template
 from flask_login import current_user
 
 from flask_mead.extensions import db, login_manager, migrate
-from flask_mead.views import IndexView, LoginView, LogoutView, RegisterView
+from flask_mead.views import FormView, DetailView, ActionView 
+from flask_mead.index import IndexView, LoginView, LogoutView, RegisterView
+from flask_mead.models import User
 
 
 class Mead:
@@ -23,26 +25,44 @@ class Mead:
             static_url_path="/flask_mead/static",
         )
 
+    def attach(self, name, view, url, **options):
+        if isinstance(view, (FormView, DetailView, ActionView)):
+            args = [name]
+            kwargs = {}
+            if hasattr(view, "model"):
+                kwargs["model"] = view.model
+            if hasattr(view, "template"):
+                kwargs["template"] = view.template
+            if isinstance(view, ActionView) and hasattr(view, "redirect_url"):
+                kwargs["redirect_url"] = view.redirect_url
+
+            self.blueprint.add_url_rule(
+                url, view_func=view.as_view(*args, **kwargs), **options
+            )
+        else:
+            self.blueprint.add_url_rule(
+                url, view_func=view.as_view(name), **options
+            )
+
+
     def register_extensions(self, app):
         db.init_app(app)
         migrate.init_app(app, db, compare_type=True)
         login_manager.init_app(app)
 
     def register_blueprints(self, app):
-        self.blueprint.add_url_rule(
-            "/", view_func=IndexView.as_view("index", template="index/home.html")
-        )
-        self.blueprint.add_url_rule(
-            "/register",
-            view_func=RegisterView.as_view("register", template="auth/register.html"),
-            methods=["GET", "POST"],
-        )
-        self.blueprint.add_url_rule(
-            "/login",
-            view_func=LoginView.as_view("login", template="auth/login.html"),
-            methods=["GET", "POST"],
-        )
-        self.blueprint.add_url_rule("/logout", view_func=LogoutView.as_view("logout"))
+        index = IndexView(template="index/home.html")
+        self.attach(name="index", view=index, url="/")
+
+        register = RegisterView(template="auth/register.html", model=User)
+        self.attach(name="register", view=register, url="/register")
+
+        login = LoginView(template="auth/login.html", model=User)
+        self.attach(name="login", view=login, url="/login", methods=["GET", "POST"])
+
+        logout = LogoutView(redirect_url="mead.index")
+        self.attach(name="logout", view=logout, url="/logout")
+
         app.register_blueprint(self.blueprint)
 
     def register_jinja_filters(self, app):

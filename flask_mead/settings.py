@@ -14,11 +14,19 @@ if not dot_env_file_exists:
 else:
     load_dotenv(dot_env_path)
 
+user = os.getenv("DB_USER")
+pwd = os.getenv("DB_USER_PASSWORD")
+host = os.getenv("DB_HOST")
+port = os.getenv("DB_PORT")
+name = os.getenv("DB_NAME")
+DATABASE_URI = f"postgresql+psycopg2://{user}:{pwd}@{host}:{port}/{name}"
+
 
 class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY")
     ENV = os.getenv("ENV")
-    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+    DATABASE_NAME = os.getenv("DB_NAME", "test")
+    SQLALCHEMY_DATABASE_URI = DATABASE_URI
     POSTS_PER_PAGE = os.getenv("POSTS_PER_PAGE", 10)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = f"{Path.cwd()}/uploads"

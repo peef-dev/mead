@@ -1,3 +1,7 @@
+import os
+
+import click
+import psycopg2
 from flask import Blueprint, g, render_template
 from flask_login import current_user
 
@@ -67,9 +71,42 @@ class Mead:
         def inject_current_user():
             return {"current_user": g.current_user}
 
+    def register_commands(self, app):
+        @app.cli.group()
+        def mead():
+            click.echo("Initialyzing your Flask-Mead")
+
+        @mead.command("init")
+        def init():
+            db_name = os.getenv("DB_NAME")
+            click.echo(f"Creating database {db_name}")
+            conn = None
+            try:
+                conn = psycopg2.connect(
+                    dbname="postgres",
+                    user=os.getenv("DB_USER"),
+                    host=os.getenv("DB_HOST"),
+                    port=os.getenv("DB_PORT"),
+                )
+                conn.autocommit = True
+                with conn.cursor() as cursor:
+                    cursor.execute(f'CREATE DATABASE "{db_name}";')
+                    cursor.execute("SELECT datname FROM pg_database")
+                    databases = [db[0] for db in cursor]
+                    if db_name in databases:
+                        click.echo(f"Database '{db_name}' created successfully.")
+                    else:
+                        click.echo(f"Failed to create database '{db_name}'.")
+            except psycopg2.errors.DuplicateDatabase:
+                click.echo(f"Database '{db_name}' already exists.")
+            finally:
+                if conn:
+                    conn.close()
+
     def init_app(self, app):
         self.register_extensions(app)
         self.register_blueprints(app)
         self.register_jinja_filters(app)
         self.register_error_pages(app)
         self.register_context(app)
+        self.register_commands(app)

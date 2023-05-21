@@ -6,9 +6,16 @@ from flask import Blueprint, g, render_template
 from flask_login import current_user
 
 from flask_mead.extensions import db, login_manager, migrate
-from flask_mead.views import FormView, DetailView, ActionView 
 from flask_mead.index import IndexView, LoginView, LogoutView, RegisterView
 from flask_mead.models import User
+from flask_mead.views import (
+    ActionView,
+    DetailView,
+    FormView,
+    Menu,
+    MenuCategory,
+    MenuItem,
+)
 
 
 class Mead:
@@ -25,6 +32,8 @@ class Mead:
             static_url_path="/flask_mead/static",
         )
 
+        self.menu = Menu()
+
     def attach(self, name, view, url, **options):
         if isinstance(view, (FormView, DetailView, ActionView)):
             args = [name]
@@ -40,10 +49,7 @@ class Mead:
                 url, view_func=view.as_view(*args, **kwargs), **options
             )
         else:
-            self.blueprint.add_url_rule(
-                url, view_func=view.as_view(name), **options
-            )
-
+            self.blueprint.add_url_rule(url, view_func=view.as_view(name), **options)
 
     def register_extensions(self, app):
         db.init_app(app)
@@ -65,6 +71,14 @@ class Mead:
 
         app.register_blueprint(self.blueprint)
 
+    def register_menu(self):
+        painting = MenuItem("Paintings", link="www.menu.paintings", icon="fa-star")
+        computer = MenuItem("Computers", link="www.menu.computers", icon="fa-star")
+        products_menu = MenuCategory("Products", [painting, computer])
+
+        self.menu.add_category(products_menu)
+        return self.menu.build()
+
     def register_jinja_filters(self, app):
         app.jinja_env.filters[
             "format_date_time"
@@ -81,15 +95,16 @@ class Mead:
 
     def register_context(self, app):
         @app.before_request
-        def add_user_to_globals():
+        def add_globals():
+            g.menu = self.register_menu()
             if current_user.is_authenticated:
                 g.current_user = current_user
             else:
                 g.current_user = None
 
         @app.context_processor
-        def inject_current_user():
-            return {"current_user": g.current_user}
+        def inject_data():
+            return {"current_user": g.current_user, "menuitems": g.menu}
 
     def register_commands(self, app):
         @app.cli.group()

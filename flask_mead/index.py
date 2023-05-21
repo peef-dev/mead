@@ -6,22 +6,21 @@ from werkzeug.security import check_password_hash
 from flask_mead.extensions import db
 from flask_mead.forms import LoginForm, RegisterForm
 from flask_mead.services import RoleService, UserService
-
-from flask_mead.views import FormView, ActionView, DetailView
+from flask_mead.views import ActionView, DetailView, FormView
 
 user = UserService(session=db.session)
 role = RoleService(session=db.session)
+
 
 class IndexView(DetailView):
     def __init__(self, template, model=None):
         super().__init__(template, model=None)
 
     def dispatch_request(self):
-        print("********", self.template)
         return render_template(self.template)
 
-class RegisterView(FormView):
 
+class RegisterView(FormView):
     def __init__(self, template, model):
         super().__init__(template, model)
 
@@ -60,7 +59,6 @@ class RegisterView(FormView):
 
 
 class LoginView(FormView):
-
     def __init__(self, template, model):
         super().__init__(template, model)
 
@@ -91,7 +89,6 @@ class LoginView(FormView):
 
 
 class LogoutView(ActionView):
-
     def dispatch_request(self):
         logout_user()
         return redirect(url_for(self.redirect_url))

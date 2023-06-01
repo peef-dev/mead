@@ -1,0 +1,24 @@
+{% for item in menuitems %}
+<li>
+    <a href="">
+        {% if item.icon %}
+        <i class="{{ item.icon }}"></i>
+        {% endif %}
+        {{ item.name }}
+    </a>
+    {% if item.items_menu %}
+    <ul>
+        {% for sub_item in item.items_menu %}
+        <li>
+            <a href="{{ sub_item.link }}">
+                {% if sub_item.icon %}
+                <i class="{{ sub_item.icon }}"></i>
+                {% endif %}
+                {{ sub_item.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</li>
+{% endfor %}

@@ -91,7 +91,8 @@ class Menu:
                     for menu in category
                 ],
             }
-            self.items.append(menu_item)
+            if menu_item not in self.items:
+                self.items.append(menu_item)
         return self.items
 
 

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- CSS -->
+    <link href="{{url_for('mead.static', filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+    {% block css %}{% endblock %}
+    
+</head>
+
+<body>
+
+    {% block navbar %}{% endblock %}
+
+    <main class="container">
+        {% block content %}{% endblock %}
+
+        {% block footer %}{% endblock %}
+    </main>
+
+
+    <script src="{{url_for('mead.static', filename='js/bootstrap.bundle.min.js')}}"></script>
+    {% block js %}{% endblock %}
+
+</body>
+
+</html>
